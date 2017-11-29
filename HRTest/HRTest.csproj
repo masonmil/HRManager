@@ -15,4 +15,7 @@
   <ItemGroup>
     <None Remove=".DS_Store" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HRManager\MasonApps.HRManager.csproj" />
+  </ItemGroup>
 </Project>
