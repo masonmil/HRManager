@@ -1,17 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-
-namespace console
-{
-    class MainClass
-    {
-        public static void Main(string[] args)
+﻿
+        [TestMethod]
+        public void Template_Get_Address_Address1_EqualsAssignedValue()
         {
-            var tups =  new List<Tuple<string, string, string>>();
+            var foo = new MasonApps.HRManager.models.address.Address();
 
-        
-            var a = Assembly.LoadFile(@"/Users/mason/Projects/masonmil/HRManagerSln/HRManager/bin/Debug/netstandard2.0/MasonApps.HRManager.dll");
+            foo.Address1 = "foo";
+            Assert.AreEqual("foo", foo.Address1);
+
+            foo.Address1 = "foo2";
+            Assert.AreEqual("foo2", foo.Address1);
+        }
+
+
+
+
+<#
+   var tups =  new List<Tuple<string, string, string>>();
+
+            // TODO: REMOVE ADDRESS CLASS AND MAKE DYNAMIC
+            var a = typeof(Address).Assembly;
 
             var types = a.GetTypes();
             Array.Sort(types,
@@ -41,22 +48,22 @@ namespace console
                     }
                 }
             }
+     
+foreach(var prop in tups) {
+#>
 
+    [TestMethod]
+    public void TemplateGet<#=  prop.Item2 #>_<#= prop.Item3 #>_EqualsAssignedValue()
+    {
+            var foo = new <#=  prop.Item1 #>();
 
+            foo.<#=  prop.Item3 #> = "foo";
+            Assert.AreEqual("foo",foo.<#=  prop.Item3 #>);
 
-
-            T4Runtime page = new T4Runtime(tups);
-            String pageContent = page.TransformText();
-
-            System.IO.File.WriteAllText("outputPage.txt", pageContent);
-
-           // Console.WriteLine(pageContent);
-           // Console.ReadLine();
-        }
+            foo.<#=  prop.Item3 #> = "foo2";
+            Assert.AreEqual("foo2",foo.<#=  prop.Item3 #>);
     }
-}
 
-
-
-
-       
+<#
+} 
+#>

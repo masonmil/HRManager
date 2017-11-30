@@ -44,12 +44,18 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>T4Runtime.cs</LastGenOutput>
     </None>
+    <None Include="bin\Debug\outputPage.txt">
+      <Link>Output\outputPage.txt</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HRManager\MasonApps.HRManager.csproj">
       <Project>{AE8B20D8-9C32-4313-98CE-7AC95BC7DAA6}</Project>
       <Name>MasonApps.HRManager</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Output\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />

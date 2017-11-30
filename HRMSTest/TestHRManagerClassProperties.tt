@@ -1,0 +1,74 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ assembly name="$(SolutionDir)/HRManager/bin/Debug/netstandard2.0/MasonApps.HRManager.dll" #>
+<#@ assembly name="$(SolutionDir)/HRMSTest/ThirdParty/netstandard.dll" #>
+<#@ import namespace="MasonApps.HRManager.models.address" #>
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace HRMSTest
+{
+    [TestClass]
+    public class TestHRManagerClassProperties
+    {
+
+<# 
+var dllLoc = @"/Users/mason/Projects/masonmil/HRManagerSln/HRManager/bin/Debug/netstandard2.0/MasonApps.HRManager.dll";
+var tups =  new List<Tuple<string, string, string>>();
+
+var a = Assembly.LoadFile(dllLoc);
+
+var types = a.GetTypes();
+
+Array.Sort(types,
+    delegate (Type type1, Type type2)
+    {
+        return string.Compare(type1.FullName, type2.FullName, StringComparison.Ordinal);
+    });
+
+foreach (var type in types)
+{
+    
+    var propertyInfos = type.GetProperties();
+                   
+    Array.Sort(propertyInfos,
+                delegate (PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
+                {
+                    return string.Compare(propertyInfo1.Name, propertyInfo2.Name, StringComparison.Ordinal);
+                });
+
+    foreach (var propertyInfo in propertyInfos)
+    {
+        if (propertyInfo.PropertyType == typeof(string))
+        {                   
+            tups.Add(Tuple.Create(type.FullName,type.Name,propertyInfo.Name));
+        }
+        else
+        {
+        }
+    }
+}
+
+foreach(var prop in tups) {
+#>
+        [TestMethod]
+        public void Get<#=  prop.Item2 #>_<#= prop.Item3 #>_EqualsAssignedValue()
+        {
+                var foo = new <#=  prop.Item1 #>();
+
+                foo.<#=  prop.Item3 #> = "foo";
+                Assert.AreEqual("foo",foo.<#=  prop.Item3 #>);
+
+                foo.<#=  prop.Item3 #> = "foo2";
+                Assert.AreEqual("foo2",foo.<#=  prop.Item3 #>);
+        }
+
+<#
+} 
+#>
+
+    }
+}
