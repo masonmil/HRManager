@@ -4,4 +4,18 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Update="T4DesignTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>T4DesignTemplate.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="PreprocessedT4Template.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="T4DesignTemplate.cs">
+      <DependentUpon>T4DesignTemplate.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
