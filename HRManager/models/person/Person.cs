@@ -1,8 +1,5 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MasonApps.HRManager.models.address;
-using MasonApps.HRManager.models.contact;
 using MasonApps.HRManager.models.businessCard;
 
 namespace MasonApps.HRManager.models.person

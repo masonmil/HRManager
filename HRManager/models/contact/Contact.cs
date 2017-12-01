@@ -1,5 +1,4 @@
-﻿using System;
-using MasonApps.HRManager.models.company;
+﻿using MasonApps.HRManager.models.company;
 using MasonApps.HRManager.models.person;
 
 namespace MasonApps.HRManager.models.contact

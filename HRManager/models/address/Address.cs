@@ -1,6 +1,4 @@
-﻿
-using System;
-namespace MasonApps.HRManager.models.address
+﻿namespace MasonApps.HRManager.models.address
 {
     public class Address
     {

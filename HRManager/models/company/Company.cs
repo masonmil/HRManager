@@ -1,5 +1,4 @@
-﻿using System;
-using MasonApps.HRManager.models.address;
+﻿using MasonApps.HRManager.models.address;
 
 namespace MasonApps.HRManager.models.company
 {

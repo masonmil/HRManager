@@ -1,5 +1,4 @@
-﻿using System;
-namespace MasonApps.HRManager.models.company
+﻿namespace MasonApps.HRManager.models.company
 {
     public enum CompanyAttributes
     {

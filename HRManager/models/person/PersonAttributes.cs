@@ -1,6 +1,4 @@
-﻿
-using System;
-namespace MasonApps.HRManager.models.person
+﻿namespace MasonApps.HRManager.models.person
 {
     public enum PersonAttributes
     {

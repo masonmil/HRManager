@@ -1,5 +1,4 @@
-﻿using System;
-namespace MasonApps.HRManager.models.address
+﻿namespace MasonApps.HRManager.models.address
 {
     public enum AddressAttributes
     {

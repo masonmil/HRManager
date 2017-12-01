@@ -1,5 +1,4 @@
-﻿using System;
-using MasonApps.HRManager.models.contact;
+﻿using MasonApps.HRManager.models.contact;
 
 namespace MasonApps.HRManager.models.businessCard
 {

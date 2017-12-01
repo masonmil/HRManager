@@ -1,5 +1,4 @@
-﻿using System;
-namespace MasonApps.HRManager.models.contact
+﻿namespace MasonApps.HRManager.models.contact
 {
     public enum ContactAttributes
     {
