@@ -17,24 +17,22 @@
     <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\HRManager\MasonApps.HRManager.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="TestHRManagerClassProperties.tt">
+    <Folder Include="ThirdParty\" />
+    <Folder Include="ClassPropertyTests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="ClassPropertyTests\TestHRManagerClassProperties.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TestHRManagerClassProperties.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="T4Template.cs">
+    <Compile Update="ClassPropertyTests\TestHRManagerClassProperties.cs">
       <DependentUpon>TestHRManagerClassProperties.tt</DependentUpon>
     </Compile>
-    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="TestHRManagerClassProperties.cs">
-      <DependentUpon>TestHRManagerClassProperties.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ThirdParty\" />
   </ItemGroup>
 </Project>
