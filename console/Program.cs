@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 
 namespace console
@@ -8,8 +9,11 @@ namespace console
     {
         public static void Main(string[] args)
         {
+            const string dllName = "MasonApps.HRManager.dll";
+
             var tups = new List<Tuple<string, string, string>>();
-            var a = Assembly.LoadFile(@"/Users/mason/Projects/masonmil/HRManagerSln/HRManager/bin/Debug/netstandard2.0/MasonApps.HRManager.dll");
+
+            var a = Assembly.LoadFile(ResolveDLLPath(dllName));
 
             AppendTypes(tups, a);
 
@@ -34,7 +38,7 @@ namespace console
             {
                 if (type.IsClass)
                 {
-                    AppendProperties(list, type);                    
+                    AppendProperties(list, type);
                 }
                 else if (type.IsEnum)
                 {
@@ -44,13 +48,15 @@ namespace console
             }
         }
 
-        private static void AppendEnum(Type e)
+        static string ResolveDLLPath(string dllName) => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), dllName);
+
+        static void AppendEnum(Type e)
         {
             var enumNames = Enum.GetNames(e);
             var enumValues = Enum.GetValues(e);
         }
 
-        private static void AppendProperties(List<Tuple<string, string, string>> list, Type type)
+        static void AppendProperties(List<Tuple<string, string, string>> list, Type type)
         {
             // get all public static properties of MyClass type
             var propertyInfos = type.GetProperties();
@@ -77,4 +83,4 @@ namespace console
 
 
 
-       
+
