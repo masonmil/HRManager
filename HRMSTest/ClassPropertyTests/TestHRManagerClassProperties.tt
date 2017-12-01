@@ -21,36 +21,7 @@ var tups =  new List<Tuple<string, string, string>>();
 
 var a = Assembly.LoadFile(dllLoc);
 
-var types = a.GetTypes();
-
-Array.Sort(types,
-    delegate (Type type1, Type type2)
-    {
-        return string.Compare(type1.FullName, type2.FullName, StringComparison.Ordinal);
-    });
-
-foreach (var type in types)
-{
-    
-    var propertyInfos = type.GetProperties();
-                   
-    Array.Sort(propertyInfos,
-                delegate (PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
-                {
-                    return string.Compare(propertyInfo1.Name, propertyInfo2.Name, StringComparison.Ordinal);
-                });
-
-    foreach (var propertyInfo in propertyInfos)
-    {
-        if (propertyInfo.PropertyType == typeof(string))
-        {                   
-            tups.Add(Tuple.Create(type.FullName,type.Name,propertyInfo.Name));
-        }
-        else
-        {
-        }
-    }
-}
+AppendTypes(tups, a);
 
 foreach(var prop in tups) {
 #>
@@ -69,6 +40,57 @@ foreach(var prop in tups) {
 <#
 } 
 #>
-
     }
 }
+<#+
+        private void AppendTypes(List<Tuple<string, string, string>> list, Assembly a)
+        {
+            var types = a.GetTypes();
+            Array.Sort(types,
+                delegate (Type type1, Type type2)
+                {
+                    return string.Compare(type1.FullName, type2.FullName, StringComparison.Ordinal);
+                });
+
+            foreach (Type type in types)
+            {
+                if (type.IsClass)
+                {
+                    AppendProperties(list, type);                    
+                }
+                else if (type.IsEnum)
+                {
+                    AppendEnum(type);
+                }
+
+            }
+        }
+
+        private void AppendEnum(Type e)
+        {
+            var enumNames = Enum.GetNames(e);
+            var enumValues = Enum.GetValues(e);
+        }
+
+        private void AppendProperties(List<Tuple<string, string, string>> list, Type type)
+        {
+            // get all public static properties of MyClass type
+            var propertyInfos = type.GetProperties();
+
+            // sort properties by name
+            Array.Sort(propertyInfos,
+                        delegate (PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
+                        {
+                            return string.Compare(propertyInfo1.Name, propertyInfo2.Name, StringComparison.Ordinal);
+                        });
+
+            // write property names
+            foreach (var propertyInfo in propertyInfos)
+            {
+                if (propertyInfo.PropertyType == typeof(string))
+                {
+                    list.Add(Tuple.Create(type.FullName, type.Name, propertyInfo.Name));
+                }
+            }
+        }
+#>

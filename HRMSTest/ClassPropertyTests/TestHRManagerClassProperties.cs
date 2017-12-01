@@ -486,6 +486,5 @@ namespace HRMSTest
                 Assert.AreEqual("foo2",foo.MiddleName);
         }
 
-
     }
 }
