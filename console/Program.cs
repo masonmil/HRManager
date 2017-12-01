@@ -48,9 +48,9 @@ namespace console
             T4Runtime page = new T4Runtime(tups);
             String pageContent = page.TransformText();
 
-            System.IO.File.WriteAllText("outputPage.txt", pageContent);
+           // System.IO.File.WriteAllText("outputPage.txt", pageContent);
 
-           // Console.WriteLine(pageContent);
+            Console.WriteLine(pageContent);
            // Console.ReadLine();
         }
     }
