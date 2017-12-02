@@ -21,6 +21,5 @@
             Country = address.Country;
             PostalCode = address.PostalCode;
         }
-
     }
 }
