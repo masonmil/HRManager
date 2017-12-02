@@ -8,19 +8,3 @@ Need to add tests to check data type int
 
 
 
-
-
-/Users/mason/Projects/masonmil/HRManagerSln/HRMSTest/ClassPropertyTests/TestHRManagerClassProperties.tt(1,1): 
-Error: The type `System.Object' is defined in an assembly that is not referenced. 
-Consider adding a reference to assembly 
-`System.Runtime, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' (HRManagerSln)
-
-
-/Users/mason/Projects/masonmil/HRManagerSln/HRMSTest/ClassPropertyTests/TestHRManagerClassProperties.tt(46,46): Error: 
-
-foreach statement cannot operate on variables of type `System.Collections.Generic.List`1<HRMSTest.Collector.CollectorForClass>' because it does not contain a definition for `GetEnumerator' or is inaccessible (HRManagerSln)
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
----------------------------------------------------------
----------------------------------------------------------
-
-
