@@ -10,6 +10,7 @@ namespace MasonApps.HRManager.models.businessCard
 
         public BusinessCard()
         {
+            Contact = new Contact();
         }
     }
 }

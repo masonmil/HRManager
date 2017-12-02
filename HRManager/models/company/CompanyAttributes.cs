@@ -2,7 +2,7 @@
 {
     public enum CompanyAttributes
     {
-        Companys,
+        Companies,
         Company,
         Name,
         FullName,

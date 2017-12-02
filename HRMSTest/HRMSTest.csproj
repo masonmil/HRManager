@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <NoStdLib>true</NoStdLib>
+    <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <NoStdLib>true</NoStdLib>
+    <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
@@ -23,6 +23,7 @@
   <ItemGroup>
     <Folder Include="ThirdParty\" />
     <Folder Include="ClassPropertyTests\" />
+    <Folder Include="Collector\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="ClassPropertyTests\TestHRManagerClassProperties.tt">

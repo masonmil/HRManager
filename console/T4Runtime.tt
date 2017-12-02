@@ -8,26 +8,49 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace HRMSTest
 {
     [TestClass]
-    public class UnitTest20
+    public class UnitTest
     {
 
 <#
-foreach(var prop in props) {
+foreach(var classCollector in _collector.ClassCollectors) 
+{
 #>
-    [TestMethod]
-    public void Get_<#=  prop.Item2 #>_<#= prop.Item3 #>_EqualsAssignedValue()
-    {
-            var foo = new <#=  prop.Item1 #>();
-
-            foo.<#=  prop.Item3 #> = "foo";
-            Assert.AreEqual("foo",foo.<#=  prop.Item3 #>);
-
-            foo.<#=  prop.Item3 #> = "foo2";
-            Assert.AreEqual("foo2",foo.<#=  prop.Item3 #>);
-    }
+    // Class: <#= classCollector.Name #>
 
 <#
-} 
+    foreach(var attributeCollector in classCollector.AttributeCollectors)
+    { 
+        if (attributeCollector.DataType.Equals("System.String"))
+        {
+#>
+        [TestMethod]
+        public void Get<#= classCollector.Name #>_<#= attributeCollector.Name #>_EqualsAssignedValue()
+        {
+            var foo = new <#=  classCollector.FullyQualifiedName #>();
+
+            foo.<#=  attributeCollector.Name #> = "foo";
+            Assert.AreEqual("foo",foo.<#=  attributeCollector.Name #>);
+
+            foo.<#=  attributeCollector.Name #> = "foo2";
+            Assert.AreEqual("foo2",foo.<#=  attributeCollector.Name #>);
+        }
+
+<#
+        }
+        else
+        {
+#>
+        [TestMethod]
+        public void Object<#= classCollector.Name #>_<#= attributeCollector.Name #>_IsInitializedl()
+        {
+            var foo = new <#=  classCollector.FullyQualifiedName #>();
+            Assert.IsNotNull(foo.<#=  attributeCollector.Name #>);
+        }
+
+<#
+        }
+    }
+}
 #>
 }
 }

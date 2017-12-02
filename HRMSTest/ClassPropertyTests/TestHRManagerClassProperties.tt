@@ -1,11 +1,15 @@
-﻿<#@ template hostSpecific="true" language="C#" #>
+﻿<#@ template hostspecific="true" language="C#" #>
+<#@ assembly name="$(SolutionDir)/HRMSTest/ThirdParty/netstandard.dll" #>
+<#@ assembly name="$(SolutionDir)/packages/NETStandard.Library.2.0.1/build/netstandard2.0/ref/System.Runtime.dll" #>
+<#@ assembly name="$(SolutionDir)/packages/NETStandard.Library.2.0.1/build/netstandard2.0/ref/System.Collections.dll" #>
 <#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetDir)/HRMSTest.dll" #>
+<#@ assembly name="$(TargetDir)/MasonApps.HRManager.dll" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Reflection" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ assembly name="$(TargetDir)/MasonApps.HRManager.dll" #>
-<#@ assembly name="$(SolutionDir)/HRMSTest/ThirdParty/netstandard.dll" #>
+<#@ import namespace="HRMSTest.Collector" #>
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -14,40 +18,69 @@ namespace HRMSTest
     [TestClass]
     public class TestHRManagerClassProperties
     {
+     
+<#  
+    const string DLL_PATH = "$(TargetDir)/MasonApps.HRManager.dll";
 
-<# 
-const string DLL_PATH ="$(TargetDir)/MasonApps.HRManager.dll";
+    var _collector = new CollectorForAssembly();
 
-var a = Assembly.LoadFile(ResolveDLLPath(DLL_PATH)); 
-var tups =  new List<Tuple<string, string, string>>();
 
-AppendTypes(tups, a);
+    var a = Assembly.LoadFile(ResolveDLLPath(DLL_PATH)); 
 
-foreach(var prop in tups) {
+    AppendTypes(_collector, a);
+
+    foreach(var classCollector in _collector.ClassCollectors)
+    {
 #>
-        [TestMethod]
-        public void Get<#=  prop.Item2 #>_<#= prop.Item3 #>_EqualsAssignedValue()
+    // Class: <#= classCollector.Name #>
+
+<#
+    foreach(var attributeCollector in classCollector.AttributeCollectors)
+    { 
+        if (attributeCollector.DataType.Equals("System.String"))
         {
-                var foo = new <#=  prop.Item1 #>();
+#>
+       
+        [TestMethod]
+        public void Get<#= classCollector.Name #>_<#= attributeCollector.Name #>_EqualsAssignedValue()
+        {
+            var foo = new <#=  classCollector.FullyQualifiedName #>();
 
-                foo.<#=  prop.Item3 #> = "foo";
-                Assert.AreEqual("foo",foo.<#=  prop.Item3 #>);
+            foo.<#=  attributeCollector.Name #> = "foo";
+            Assert.AreEqual("foo",foo.<#=  attributeCollector.Name #>);
 
-                foo.<#=  prop.Item3 #> = "foo2";
-                Assert.AreEqual("foo2",foo.<#=  prop.Item3 #>);
+            foo.<#=  attributeCollector.Name #> = "foo2";
+            Assert.AreEqual("foo2",foo.<#=  attributeCollector.Name #>);
         }
 
 <#
-} 
+        }
+        else
+        {
+#>
+        [TestMethod]
+        public void Object<#= classCollector.Name #>_<#= attributeCollector.Name #>_IsInitialized()
+        {
+            var foo = new <#=  classCollector.FullyQualifiedName #>();
+            Assert.IsNotNull(foo.<#=  attributeCollector.Name #>);
+        }
+
+<#
+        }
+    }
+}
 #>
     }
 }
+
+
 <#+
         private string ResolveDLLPath(string dllName) => this.Host.ResolveAssemblyReference(dllName);
 
-        private void AppendTypes(List<Tuple<string, string, string>> list, Assembly a)
+        private void AppendTypes(CollectorForAssembly collector, Assembly a)
         {
             var types = a.GetTypes();
+            var enumCollectors = new List<CollectorForEnum>();
             Array.Sort(types,
                 delegate (Type type1, Type type2)
                 {
@@ -58,25 +91,38 @@ foreach(var prop in tups) {
             {
                 if (type.IsClass)
                 {
-                    AppendProperties(list, type);                    
+                    CollectorForClass classCollector = new CollectorForClass(type.FullName, type.Name);
+                    AppendProperties(classCollector, type);
+                    collector.ClassCollectors.Add(classCollector);
                 }
-                else if (type.IsEnum)
+                else if (type.IsEnum && type.Name.EndsWith("Attributes", StringComparison.Ordinal))
                 {
-                    AppendEnum(type);
+                    enumCollectors.Add(AppendEnum(type));
                 }
 
             }
+
+            //Assign enums to respective classes
+            foreach(var collectedEnum in enumCollectors)
+            {
+                var className = collectedEnum.EnumName.Replace("Attributes","");
+                foreach(var classs in collector.ClassCollectors)
+                {
+                    if (className.Equals(classs.Name))
+                    {
+                        classs.AttributeEnumCollector = new CollectorForEnum(
+                            collectedEnum.EnumName, collectedEnum.Names, collectedEnum.Values);
+                        break;
+                    }
+                }
+            }
+
         }
 
-        private void AppendEnum(Type e)
-        {
-            var enumNames = Enum.GetNames(e);
-            var enumValues = Enum.GetValues(e);
-        }
+        private CollectorForEnum AppendEnum(Type e) => new CollectorForEnum(e.Name, Enum.GetNames(e), Enum.GetValues(e));
 
-        private void AppendProperties(List<Tuple<string, string, string>> list, Type type)
+        private void AppendProperties(CollectorForClass c, Type type)
         {
-            // get all public static properties of MyClass type
             var propertyInfos = type.GetProperties();
 
             // sort properties by name
@@ -86,13 +132,9 @@ foreach(var prop in tups) {
                             return string.Compare(propertyInfo1.Name, propertyInfo2.Name, StringComparison.Ordinal);
                         });
 
-            // write property names
             foreach (var propertyInfo in propertyInfos)
             {
-                if (propertyInfo.PropertyType == typeof(string))
-                {
-                    list.Add(Tuple.Create(type.FullName, type.Name, propertyInfo.Name));
-                }
+                c.AttributeCollectors.Add(new CollectorForAttribute(propertyInfo.Name, propertyInfo.PropertyType.FullName));
             }
         }
 #>

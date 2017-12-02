@@ -14,7 +14,8 @@ namespace MasonApps.HRManager.models.person
 
         public Person()
         {
-            BusinessCards = new List<BusinessCard>();  
+            BusinessCards = new List<BusinessCard>(); 
+            Address = new Address();
         }
     }
 }

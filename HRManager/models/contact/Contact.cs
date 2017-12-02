@@ -9,6 +9,9 @@ namespace MasonApps.HRManager.models.contact
 
         public string EmailAddress { get; set; }
         public string Phone { get; set; }
-               
+         
+        public Contact(){
+            Company = new Company();
+        }
     }
 }

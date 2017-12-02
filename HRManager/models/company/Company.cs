@@ -8,6 +8,9 @@ namespace MasonApps.HRManager.models.company
         public string FullName { get; set; }
         public Address Address { get; set; }
 
+        public Company(){
+            Address = new Address();
+        }
 
     }
 }
