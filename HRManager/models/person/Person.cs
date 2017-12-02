@@ -9,6 +9,7 @@ namespace MasonApps.HRManager.models.person
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
+
         public List<BusinessCard> BusinessCards { get; set; }
         public Address Address { get; set; }
 

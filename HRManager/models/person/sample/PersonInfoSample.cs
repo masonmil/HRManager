@@ -1,5 +1,8 @@
 ﻿
 using System;
+using MasonApps.HRManager.helper;
+using MasonApps.HRManager.models.address.sample;
+
 namespace MasonApps.HRManager.models.person.sample
 {
     public class PersonInfoSample : Person
@@ -19,11 +22,11 @@ namespace MasonApps.HRManager.models.person.sample
             var pickMale = new Random(seed).Next(-1, 2);
             string[] firstName = pickMale == 1 ? firstNamesMale : firstNamesFemale;
 
-            //TODO: Add StringHelper utils
-            //person.FirstName = StringHelper.GetRandomString(firstName, new Random(seed));
-            //person.MiddleName = StringHelper.GetRandomString(firstName, new Random(DateTime.Now.Millisecond - seed));
-            //person.LastName = StringHelper.GetRandomString(lastNames, new Random(seed));
-            //person.Address = new PersonInfoAddressSample(seed);
+
+            person.FirstName = StringHelper.GetRandomString(firstName, new Random(seed));
+            person.MiddleName = StringHelper.GetRandomString(firstName, new Random(DateTime.Now.Millisecond - seed));
+            person.LastName = StringHelper.GetRandomString(lastNames, new Random(seed));
+            person.Address = new PersonInfoAddressSample(seed);
         }
 
         #region Last Names

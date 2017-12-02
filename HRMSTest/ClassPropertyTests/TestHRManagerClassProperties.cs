@@ -7,6 +7,8 @@ namespace HRMSTest
     public class TestHRManagerClassProperties
     {
      
+    // Class: StringHelper
+
     // Class: Address
 
        

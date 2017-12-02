@@ -1,4 +1,6 @@
 ﻿using System;
+using MasonApps.HRManager.helper;
+
 namespace MasonApps.HRManager.models.company.sample
 {
     public class CompanyInfoSample : Company
@@ -19,9 +21,9 @@ namespace MasonApps.HRManager.models.company.sample
         public CompanyInfoSample() : this(1) { }
         public CompanyInfoSample(int seed)
         {
-            //Name = StringHelper.GetRandomString(names, new Random(seed));
+            Name = StringHelper.GetRandomString(names, new Random(seed));
             FullName = Name + " Inc.";
-            //Address = new CompanyAddressSample(seed);
+           // Address = new CompanyAddressSample(seed);
 
         }
     }

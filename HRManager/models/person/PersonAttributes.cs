@@ -2,14 +2,13 @@
 {
     public enum PersonAttributes
     {
-        Persons,
         Person,
+        Persons,
         FirstName,
         MiddleName,
         LastName,
         Address,
         BusinessCards,
-        BusinessCard
     }
 
 }

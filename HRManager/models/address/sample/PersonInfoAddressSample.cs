@@ -1,5 +1,7 @@
 ﻿
 using System;
+using MasonApps.HRManager.helper;
+
 namespace MasonApps.HRManager.models.address.sample
 {
     public class PersonInfoAddressSample : Address
@@ -33,12 +35,11 @@ namespace MasonApps.HRManager.models.address.sample
         public PersonInfoAddressSample(int seed)
         {
             Country = "United States";
-            //TODO: Add StringHelper utils
-            //Address1 = StringHelper.GetRandomString(address1s, new Random(seed));
-            //Address2 = StringHelper.GetRandomString(address2s, new Random(DateTime.Now.Millisecond - seed));
-           // City = StringHelper.GetRandomString(cities, new Random(seed));
-           // StateProvince = StringHelper.GetRandomString(stateProvinces, new Random(seed));
-           // PostalCode = StringHelper.GetRandomString(postalCodes, new Random(seed));
+            Address1 = StringHelper.GetRandomString(address1s, new Random(seed));
+            Address2 = StringHelper.GetRandomString(address2s, new Random(DateTime.Now.Millisecond - seed));
+            City = StringHelper.GetRandomString(cities, new Random(seed));
+            StateProvince = StringHelper.GetRandomString(stateProvinces, new Random(seed));
+            PostalCode = StringHelper.GetRandomString(postalCodes, new Random(seed));
 
         }
     }

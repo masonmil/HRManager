@@ -1,4 +1,5 @@
 ﻿using System;
+using MasonApps.HRManager.helper;
 using MasonApps.HRManager.models.company.sample;
 using MasonApps.HRManager.models.person.sample;
 
@@ -19,7 +20,7 @@ namespace MasonApps.HRManager.models.contact.sample
             PersonInfoSample.HydratePersonInfoSample(contact, seed);
 
             contact.Company = new CompanyInfoSample(seed);
-           // contact.EmailAddress = string.Format("{0}.{1}@{2}", contact.FirstName, contact.LastName, StringHelper.GetRandomString(emaildomains, new Random(seed)));
+            contact.EmailAddress = string.Format("{0}.{1}@{2}", contact.FirstName, contact.LastName, StringHelper.GetRandomString(emaildomains, new Random(seed)));
         }
     }
 }
