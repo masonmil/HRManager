@@ -31,10 +31,13 @@ namespace HRMSTest
 
     foreach(var classCollector in _collector.ClassCollectors)
     {
+    if (classCollector.AttributeCollectors.Any())
+    {
 #>
     // Class: <#= classCollector.Name #>
 
 <#
+    }
     foreach(var attributeCollector in classCollector.AttributeCollectors)
     { 
         if (attributeCollector.DataType.Equals("System.String"))

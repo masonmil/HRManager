@@ -2,9 +2,9 @@
 Need to add tests to check data type int
 
 <#@ assembly name="$(SolutionDir)/HRMSTest/ThirdParty/netstandard.dll" #>
-
 <#@ assembly name="$(SolutionDir)/packages/NETStandard.Library.2.0.1/build/netstandard2.0/ref/System.Runtime.dll" #>
 <#@ assembly name="$(SolutionDir)/packages/NETStandard.Library.2.0.1/build/netstandard2.0/ref/netstandard.dll" #>
 
 
-
+console
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>

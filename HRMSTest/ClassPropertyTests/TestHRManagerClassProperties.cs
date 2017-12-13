@@ -7,8 +7,6 @@ namespace HRMSTest
     public class TestHRManagerClassProperties
     {
      
-    // Class: StringHelper
-
     // Class: Address
 
        
@@ -528,6 +526,15 @@ namespace HRMSTest
 
             foo.Phone = "foo2";
             Assert.AreEqual("foo2",foo.Phone);
+        }
+
+    // Class: Key
+
+        [TestMethod]
+        public void ObjectKey_isEmpty_IsInitialized()
+        {
+            var foo = new MasonApps.HRManager.models.key.Key();
+            Assert.IsNotNull(foo.isEmpty);
         }
 
     // Class: Person

@@ -24,6 +24,7 @@
     <Folder Include="ThirdParty\" />
     <Folder Include="ClassPropertyTests\" />
     <Folder Include="Collector\" />
+    <Folder Include="Collector\Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="ClassPropertyTests\TestHRManagerClassProperties.tt">
